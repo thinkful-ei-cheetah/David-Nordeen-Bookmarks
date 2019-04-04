@@ -16,10 +16,11 @@
     <h1>Bookmarks</h1>
   </header>
   <main>
+    <section class="add-item">
+    </section>
     <section class="list-controler js-list-controler">
-      <button class="add-item js-add-item">Add Item</button>
       <select class="min-rating js-min-rating">
-        <option value="0">Filter By Rating</option>
+        <option value="0">Filter By Min Rating</option>
         <option value="1">1 Star</option>
         <option value="2">2 Stars</option>
         <option value="3">3 Stars</option>
@@ -27,19 +28,25 @@
         <option value="5">5 Stars</option>
       </select>
     </section>
+    <ul class="bookmark-list">
+<!-- <span class="bookmark">
+  <ul class="inside-bookmark-list">
+    <li><h2>${item.title}</h2></p>
+    <li>${item.description}</li>
+    <li>${item.rating}</li>
+    <button class="addButton" role="button" onclick="location.href=' ${item.url}'">Visit Site</button>
+  </ul>
+  <span> -->
 
-    <section class="add-item">
-
-    </section>
-
-    <section class="bookmark-list-container js-bookmark-list-container">
-      <ul class="bookmark-list js-bookmark-list">
-
-      </ul>
-    </section>
+    </ul>
   </main>
   </div>
-  <script src="scripts/index.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cuid/1.3.8/browser-cuid.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="scripts/api.js"></script>
+    <script type="text/javascript" src="scripts/store.js"></script>
+    <script type="text/javascript" src="scripts/bookmark.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
 </body>
 
 </html>

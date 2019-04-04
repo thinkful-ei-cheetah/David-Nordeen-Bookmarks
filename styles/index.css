@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  max-width: 600px;
+  
+}
+
+button, input[type="text"] {
+  padding: 5px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:hover:disabled {
+  cursor: default;
+}
+
+.hidden {
+  display: none;
+}
+
+h1 {
+  margin:0;
+  padding:0;
+  color: rgb(16, 121, 190)
+}
+
+body, ul {
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 10px;
+}
+.add-item{
+ margin-top: 5px;
+ margin-bottom: 5px;
+}
+
+.item-title{
+ margin-top: 5px;
+ margin-bottom: 5px;
+}
+
+.item-description{
+ margin-top: 5px;
+ margin-bottom: 5px;
+}
+
+.item-url{
+ margin-top: 5px;
+ margin-bottom: 5px;
+}
+
+.item-rating{
+ margin-top: 5px;
+ margin-bottom: 5px;
+}
+
+/* .bookmark-item {
+  display: block;
+  color: grey;
+  font-style: italic;
+  font-size: 20px;
+  margin-bottom: 15px;
+} */
+
+.bookmark-list {
+  border: none;
+}
