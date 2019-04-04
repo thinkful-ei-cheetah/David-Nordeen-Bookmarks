@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+button, input[type="text"] {
+  padding: 5px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:hover:disabled {
+  cursor: default;
+}
+
+.hidden {
+  display: none;
+}
+
+h1 {
+  margin:0;
+  padding:0;
+  color: red;
+}
+
+body, ul {
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 10px;
+}
