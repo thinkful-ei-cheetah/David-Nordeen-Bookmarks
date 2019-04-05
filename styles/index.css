@@ -91,3 +91,7 @@ ul {
 .add-item-form{
   border: 1px solid black;
 }
+.error{
+  display: inline-block;
+  color: red;
+}

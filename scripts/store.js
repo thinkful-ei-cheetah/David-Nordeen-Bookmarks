@@ -16,7 +16,6 @@ const store = (function () {
   };
 
   const findById = function (id) {
-    console.log(store.items, id);
     return store.items.filter(item => item.id === id);
   };
 
@@ -28,11 +27,16 @@ const store = (function () {
     return store.sortNumber = Number(num);
   };
 
+  const showError = function (message) {
+    return store.errorMessage = message;
+  };
+
   return {
     addItem,
     items: [],
     isAdding: false,
     minRating: 0,
+    errorMessage: '',
     isExpanded: false,
     sortNumber: null,
     toggleAddItem,
@@ -40,5 +44,6 @@ const store = (function () {
     findById,
     expandBookmark,
     filterBookmarks,
+    showError,
   };
 })();

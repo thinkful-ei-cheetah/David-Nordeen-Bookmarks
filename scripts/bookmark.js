@@ -9,6 +9,7 @@ const bookmarkList = (function () {
       return `<form class="add-item-form">
        <label for="item-title">Webpage Title:</label>
        <input type="text" name="title" class="item-title">
+       <p class="error">${store.errorMessage}</p>
          <br>
            <label for="item-description">Description:</label>
            <input type="text" name="description" class="item-description">
@@ -69,9 +70,7 @@ const bookmarkList = (function () {
   function handleExpandBookmark() {
     $('.bookmark-list').on('click', '.bookmark-element', function (event) {
       const id = getItemIdFromElement(event.currentTarget);
-      console.log(id);
       let item = store.findById(id);
-      console.log(item);
       item[0].isExpanded = !item[0].isExpanded;
       generateBookmarkElement(item[0]);
       render();
@@ -110,10 +109,7 @@ const bookmarkList = (function () {
         url,
         rating
       };
-      $('.item-title').val('');
-      $('.item-description').val('');
-      $('.item-url').val('');
-      $('.item-rating').val('');
+
 
       api
         .createItem(newBookmark)
@@ -121,13 +117,24 @@ const bookmarkList = (function () {
           if (!response.ok) {
             let error = response.json()
               .then((jsonResponse) => {
+                store.showError(jsonResponse.message);
+                render();
+                $('.item-title').val(title);
+                $('.item-description').val(desc);
+                $('.item-url').val(url);
+                $('.item-rating').val(rating);
                 return jsonResponse.message;
               });
             throw error;
+
           }
           return response.json();
         })
         .then(newItem => {
+          $('.item-title').val('');
+          $('.item-description').val('');
+          $('.item-url').val('');
+          $('.item-rating').val('');
           store.addItem(newItem);
           render();
         });
@@ -138,24 +145,16 @@ const bookmarkList = (function () {
 
   function handleResetClicked() {
     $('.add-item').on('click', '.resetButton', () => {
-      console.log(store);
       store.toggleAddItem();
-      console.log(store);
       render();
     });
   }
 
   function handleDeleteItemClicked() {
-    // like in `handleItemCheckClicked`, we use event delegation
     $('.bookmark-list').on('click', '.deleteButton', (event) => {
-      // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
-
-      console.log(event.target, id);
-      // delete the item
       api.deleteItem(id)
         .then((response) => {
-          console.log(response);
           if (!response.ok) {
             let error = response.json()
               .then((jsonResponse) => {
@@ -169,7 +168,7 @@ const bookmarkList = (function () {
         .catch((error) => {
           console.log('hi', error);
         });
-      // render the updated shopping list
+      render();
     });
   }
 
