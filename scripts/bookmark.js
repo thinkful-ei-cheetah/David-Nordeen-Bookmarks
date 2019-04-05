@@ -27,19 +27,58 @@ const bookmarkList = (function () {
   }
 
   function generateBookmarkElement(item) {
-    console.log(item.id);
-    return `
-    <li class="bookmark-element" data-item-id="${item.id}">
+    //B. This is a new change
+    if (item.isExpanded === false){
+      return`
+     <li class="bookmark-element" data-item-id="${item.id}">
+    <h2>${item.title}</h2>
+    <li>
+     `;
+    } else {
+      return `
+<li class="bookmark-element" data-item-id="${item.id}">
     <h2>${item.title}</h2>
     <ul class="inside-bookmark-list">
-    <li>${item.description}</li>
+    <li>${item.desc}</li>
     <li>${item.rating}</li>
     <button class="addButton" role="button"><a href=${item.url} target="_blank">Visit Site</a></button>
     <button class="deleteButton" role="button">Delete Bookmark</a></button>
     </ul>
-    <li>
-  `;
+    <li>`;
+    }
+   
+   
+   
+    //A. This is what I had originally
+    //   return`
+    //   <li class="bookmark-element" data-item-id="${item.id}">
+    //   <h2>${item.title}</h2>
+    //   <ul class="inside-bookmark-list">
+    //   <li>${item.desc}</li>
+    //   <li>${item.rating}</li>
+    //   <button class="addButton" role="button"><a href=${item.url} target="_blank">Visit Site</a></button>
+    //   <button class="deleteButton" role="button">Delete Bookmark</a></button>
+    //   </ul>
+    //   <li>
+    // `;
+  
   }
+  //C. This is new
+  function handleExpandBookmark() {
+    $('.bookmark-list').on('click', '.bookmark-element', function (event) {
+      const id = $(event.currentTarget)
+        .closest('.bookmark-element')
+        .attr('id');
+      let item = store.findById(id);
+      item[0].isExpanded = !item[0].isExpanded;
+      generateBookmarkElement(item[0]);
+      render();
+    });
+  }
+
+
+
+
 
   function generateBookmarkString(bookmarks) {
     const items = bookmarks.map(item => generateBookmarkElement(item));
@@ -95,6 +134,7 @@ const bookmarkList = (function () {
     });
   }
 
+
   function getItemIdFromElement(item) {
     return $(item)
       .closest('.bookmark-element')
@@ -140,6 +180,7 @@ const bookmarkList = (function () {
     handleAddBookmarkClicked();
     handleNewItemSubmit();
     handleDeleteItemClicked();
+    handleExpandBookmark();
   }
   return {
     render,
