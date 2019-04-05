@@ -16,7 +16,7 @@ const store = (function () {
   };
 
   const findById = function (id) {
-    console.log(store.items);
+    console.log(store.items, id);
     return store.items.filter(item => item.id === id);
   };
 

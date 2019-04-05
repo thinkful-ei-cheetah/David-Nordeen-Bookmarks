@@ -13,12 +13,14 @@ const bookmarkList = (function () {
            <label for="item-description">Description:</label>
            <input type="text" name="description" class="item-description">
              <br>
-            <label for="item-url">URL</label>
+            <label for="item-url">URL:</label>
             <input type="text" name="url" class="item-url">
               <br>
             <label for="item-rating">Bookmark Rating</label>
             <input type="number" name="rating" min="1" max="5" value="5" class="item-rating">
+            <br>
                <button type="submit" role="button">Submit</button>
+               <button class="resetButton" type="button" role="button">Reset</button>
            </form>`;
     }
     else {
@@ -27,57 +29,45 @@ const bookmarkList = (function () {
   }
 
   function generateBookmarkElement(item) {
-    //B. This is a new change
+    
     if (item.isExpanded === false){
       return`
      <li class="bookmark-element" data-item-id="${item.id}">
     <h2>${item.title}</h2>
+    <h3>${item.rating}</h3>
     <li>
      `;
     } else {
       return `
 <li class="bookmark-element" data-item-id="${item.id}">
     <h2>${item.title}</h2>
-    <ul class="inside-bookmark-list">
-    <li>${item.desc}</li>
-    <li>${item.rating}</li>
+    <div class="inside-bookmark-list">
+    <h3>${item.rating}</h3>
+    <p>${item.desc}</p>
     <button class="addButton" role="button"><a href=${item.url} target="_blank">Visit Site</a></button>
     <button class="deleteButton" role="button">Delete Bookmark</a></button>
-    </ul>
+    </div>
     <li>`;
-    }
-   
-   
-   
-    //A. This is what I had originally
-    //   return`
-    //   <li class="bookmark-element" data-item-id="${item.id}">
-    //   <h2>${item.title}</h2>
-    //   <ul class="inside-bookmark-list">
-    //   <li>${item.desc}</li>
-    //   <li>${item.rating}</li>
-    //   <button class="addButton" role="button"><a href=${item.url} target="_blank">Visit Site</a></button>
-    //   <button class="deleteButton" role="button">Delete Bookmark</a></button>
-    //   </ul>
-    //   <li>
-    // `;
-  
+    }  
   }
-  //C. This is new
+
+  function getItemIdFromElement(item) {
+    return $(item)
+      .closest('.bookmark-element')
+      .data('item-id');
+  }
+
   function handleExpandBookmark() {
     $('.bookmark-list').on('click', '.bookmark-element', function (event) {
-      const id = $(event.currentTarget)
-        .closest('.bookmark-element')
-        .attr('id');
+      const id = getItemIdFromElement(event.currentTarget);
+      console.log(id);
       let item = store.findById(id);
+      console.log(item);
       item[0].isExpanded = !item[0].isExpanded;
       generateBookmarkElement(item[0]);
       render();
     });
   }
-
-
-
 
 
   function generateBookmarkString(bookmarks) {
@@ -135,11 +125,37 @@ const bookmarkList = (function () {
   }
 
 
-  function getItemIdFromElement(item) {
-    return $(item)
-      .closest('.bookmark-element')
-      .data('item-id');
+
+
+
+
+
+
+
+
+
+
+
+  function handleResetClicked() {
+    $('.add-item').on('click', '.resetButton', () => {
+      console.log(store);
+      store.toggleAddItem();
+      console.log(store);
+      render();
+    });
   }
+
+
+
+
+
+
+
+
+
+
+
+
 
   function handleDeleteItemClicked() {
     // like in `handleItemCheckClicked`, we use event delegation
@@ -178,6 +194,7 @@ const bookmarkList = (function () {
 
   function bindEventListeners() {
     handleAddBookmarkClicked();
+    handleResetClicked();
     handleNewItemSubmit();
     handleDeleteItemClicked();
     handleExpandBookmark();
