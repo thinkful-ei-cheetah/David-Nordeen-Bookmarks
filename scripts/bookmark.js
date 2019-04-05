@@ -137,6 +137,8 @@ const bookmarkList = (function () {
           $('.item-description').val('');
           $('.item-url').val('');
           $('.item-rating').val('');
+          store.showError('');
+          store.toggleAddItem();
           store.addItem(newItem);
           render();
         });
