@@ -51,6 +51,15 @@ const bookmarkList = (function () {
     }  
   }
 
+  function handleFilter() {
+    $('.js-min-rating').on('change', function () {
+      const num = ($('.js-min-rating').val());
+      store.filterBookmarks(num);
+      render();
+    });
+  }
+
+
   function getItemIdFromElement(item) {
     return $(item)
       .closest('.bookmark-element')
@@ -71,7 +80,8 @@ const bookmarkList = (function () {
 
 
   function generateBookmarkString(bookmarks) {
-    const items = bookmarks.map(item => generateBookmarkElement(item));
+
+    const items = bookmarks.filter(item => item.rating >= store.sortNumber).map(item => generateBookmarkElement(item));
     return items.join('');
   }
 
@@ -126,16 +136,6 @@ const bookmarkList = (function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
   function handleResetClicked() {
     $('.add-item').on('click', '.resetButton', () => {
       console.log(store);
@@ -144,18 +144,6 @@ const bookmarkList = (function () {
       render();
     });
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
   function handleDeleteItemClicked() {
     // like in `handleItemCheckClicked`, we use event delegation
@@ -198,6 +186,7 @@ const bookmarkList = (function () {
     handleNewItemSubmit();
     handleDeleteItemClicked();
     handleExpandBookmark();
+    handleFilter();
   }
   return {
     render,

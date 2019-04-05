@@ -24,15 +24,21 @@ const store = (function () {
     return this.findById(id);
   };
 
+  const filterBookmarks = function (num) {
+    return store.sortNumber = Number(num);
+  };
+
   return {
     addItem,
     items: [],
     isAdding: false,
     minRating: 0,
     isExpanded: false,
+    sortNumber: null,
     toggleAddItem,
     findAndDelete,
     findById,
     expandBookmark,
+    filterBookmarks,
   };
 })();
