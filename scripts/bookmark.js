@@ -35,7 +35,8 @@ const bookmarkList = (function () {
       return`
      <li class="bookmark-element" data-item-id="${item.id}">
     <h2>${item.title}</h2>
-    <h3>${item.rating}</h3>
+    <h3>${item.rating} Stars</h3>
+    <button class="expandButton" type="button" role="button">Expand</button>
     <li>
      `;
     } else {
@@ -43,10 +44,11 @@ const bookmarkList = (function () {
 <li class="bookmark-element" data-item-id="${item.id}">
     <h2>${item.title}</h2>
     <div class="inside-bookmark-list">
-    <h3>${item.rating}</h3>
+    <h3>${item.rating} Stars</h3>
     <p>${item.desc}</p>
     <button class="addButton" role="button"><a href=${item.url} target="_blank">Visit Site</a></button>
     <button class="deleteButton" role="button">Delete Bookmark</a></button>
+    <button class="expandButton" type="button" role="button">Collapse</button>
     </div>
     <li>`;
     }  
@@ -68,7 +70,7 @@ const bookmarkList = (function () {
   }
 
   function handleExpandBookmark() {
-    $('.bookmark-list').on('click', '.bookmark-element', function (event) {
+    $('.bookmark-list').on('click', '.expandButton', function (event) {
       const id = getItemIdFromElement(event.currentTarget);
       let item = store.findById(id);
       item[0].isExpanded = !item[0].isExpanded;
