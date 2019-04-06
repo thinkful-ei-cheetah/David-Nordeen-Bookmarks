@@ -6,7 +6,7 @@
 const bookmarkList = (function () {
   function generateNewBookmarkForm() {
     if (store.isAdding === true) {
-      return `<form class="add-item-form">
+      return `<form role="form" class="add-item-form">
        <label for="item-title">Webpage Title:</label>
        <input type="text" name="title" class="item-title">
        <p class="error">${store.errorMessage}</p>
@@ -30,9 +30,9 @@ const bookmarkList = (function () {
   }
 
   function generateBookmarkElement(item) {
-    
-    if (item.isExpanded === false){
-      return`
+
+    if (item.isExpanded === false) {
+      return `
      <li class="bookmark-element" data-item-id="${item.id}">
     <h2>${item.title}</h2>
     <h3>${item.rating} Stars</h3>
@@ -51,7 +51,7 @@ const bookmarkList = (function () {
     <button class="expandButton" type="button" role="button">Collapse</button>
     </div>
     <li>`;
-    }  
+    }
   }
 
   function handleFilter() {
@@ -117,7 +117,7 @@ const bookmarkList = (function () {
         .createItem(newBookmark)
         .then(response => {
           if (!response.ok) {
-            let error = response.json()
+            response.json()
               .then((jsonResponse) => {
                 store.showError(jsonResponse.message);
                 render();
@@ -125,22 +125,21 @@ const bookmarkList = (function () {
                 $('.item-description').val(desc);
                 $('.item-url').val(url);
                 $('.item-rating').val(rating);
-                return jsonResponse.message;
               });
-            throw error;
-
           }
-          return response.json();
-        })
-        .then(newItem => {
-          $('.item-title').val('');
-          $('.item-description').val('');
-          $('.item-url').val('');
-          $('.item-rating').val('');
-          store.showError('');
-          store.toggleAddItem();
-          store.addItem(newItem);
-          render();
+          else {
+            response.json()
+              .then((newItem) => {
+                $('.item-title').val('');
+                $('.item-description').val('');
+                $('.item-url').val('');
+                $('.item-rating').val('');
+                store.showError('');
+                store.toggleAddItem();
+                store.addItem(newItem);
+                render();
+              });
+          }
         });
     });
   }
@@ -160,28 +159,18 @@ const bookmarkList = (function () {
       api.deleteItem(id)
         .then((response) => {
           if (!response.ok) {
-            let error = response.json()
+            response.json()
               .then((jsonResponse) => {
-                return jsonResponse.message;
+                console.log(jsonResponse.message);
               });
-            throw error;
           }
-          store.findAndDelete(id);
-          render();
-        })
-        .catch((error) => {
-          console.log('hi', error);
+          else {
+            store.findAndDelete(id);
+            render();
+          }
         });
-      render();
     });
   }
-
-
-
-
-
-
-
 
   function bindEventListeners() {
     handleAddBookmarkClicked();

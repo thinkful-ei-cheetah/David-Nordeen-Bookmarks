@@ -11,16 +11,16 @@
 </head>
 
 <body>
-  <div class="container">
+  <div  class="container">
   <header role="banner">
     <h1>Bookmarks</h1>
   </header>
-  <main>
+  <main role="main">
     <div class="new"></div>
-    <section class="add-item">
+    <section aria-label="add item" role="region" class="add-item">
     </section>
     <section class="list-controler js-list-controler">
-      <select class="min-rating js-min-rating">
+      <select aria-label="rating selector" class="min-rating js-min-rating">
         <option value="0">Filter By Min Rating</option>
         <option value="1">1 Star</option>
         <option value="2">2 Stars</option>
@@ -32,8 +32,8 @@
   </div>
     <ul class="bookmark-list">
     </ul>
-  </main>
   </div>
+  </main>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cuid/1.3.8/browser-cuid.min.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="scripts/api.js"></script>
